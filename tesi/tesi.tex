@@ -1,396 +1,571 @@
-\documentclass[12pt,a4paper,twoside]{book}
+\documentclass[11pt, a4paper]{article}
 
-
-\usepackage[utf8]{inputenc}
-\usepackage[a4paper,inner=3.5cm,outer=2.5cm]{geometry}
-
-\usepackage[titletoc,title,toc,page]{appendix}
-\usepackage{verbatim}
-\usepackage{placeins}
-\usepackage{listings}
-\usepackage{hyperref}
+% --- PREAMBOLO ---
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2cm, right=2cm]{geometry}
+\usepackage{fontspec}
 \usepackage[italian]{babel}
-\usepackage{tikz}
-\usepackage{parskip}
 
-\usepackage{graphicx}
-\usepackage{blindtext}
-\usepackage{chngcntr}
-\counterwithin{table}{chapter}
+% Impostazione font (Noto Sans per compatibilità e leggibilità)
+\babelfont{rm}{Noto Sans}
 
-\usepackage{newlfont}
-\usepackage{fancyhdr}
-\usepackage{indentfirst}
-\usepackage[utf8]{inputenc}
-\usepackage{float}
-\usepackage{hyperref}
-\usepackage[capitalize,noabbrev]{cleveref}
-\usepackage{soul}
-\usepackage[font=footnotesize,labelfont=bf]{caption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{enumitem}
+\usepackage{xcolor}
 
-\usepackage{multirow}
-\usepackage{hyphenat}
-\hyphenation{mate-mati-ca recu-perare}
-
-\usepackage{lscape} 
-
-\usepackage{natbib}
-\bibliographystyle{alpha}
-\setcitestyle{super,open={[},close={]}}
-
-\newcommand{\rom}[1]{\uppercase\expandafter{\romannumeral #1\relax}}
-
-\usepackage{pdfpages}
+\title{\textbf{Catalogo Esercizi di Ricerca Operativa}}
+\author{Branch and Bound \& Rilassamento Lagrangiano}
+\date{Ultimo aggiornamento: Maggio 2026}
 
 \begin{document}
-% Per spostare i vari elementi più su o più giù gioca con i valori di vspace che ci sono tra uno e l'altro
-\pagestyle{empty}
-\newgeometry{
-    left=20mm,
-    right=20mm,
-    top=20mm,
-    bottom=20mm
-}
 
-\begin{titlepage}
+\maketitle
 
-\begin{center}
-
-% marchio di ateneo
-\includegraphics[width=6.5cm,height=4.7cm]{img/marchio-di-ateneo.png}
-
-\vspace{10mm}
-
-% \large is 12pt
-{\large{\bf{Dipartimento di }}} 
-
-\vspace{5mm}
-
-% \Large is 14.4pt
-{\Large{\bf{Corso di Laurea in }}}
-
-\vspace{15mm}
-
-{\Huge{\bf Titolo della tesi }}\\
-\vspace{3mm}
-{\Huge{\bf anche su più}}\\
-\vspace{3mm}
-{\Huge{\bf righe }}\\
-\vspace{3mm}
-
-\end{center}
-
-\vspace{10mm}
-
-\begin{minipage}[t]{0.40\textwidth}
-{\Large{\bf Relatore: \\ Chiar.mo Prof.\\ Nome Cognome}}
-
-\vspace{3mm}
-
-{\Large{\bf Correlatore: \\ Chiar.mo Prof.\\ Nome Cognome}}
-\end{minipage}
-\hfill
-\begin{minipage}[t]{0.40\textwidth}\raggedleft
-{\Large{\bf Presentata da: \\ Nome Cognome}}
-\end{minipage}
-
-\vspace{30mm}
-
-\rule[0.5cm]{15.8cm}{0.6mm}
-
-\begin{center}
-{\large{\bf Sessione mese anno \\}}
-{\large{\bf Anno Accademico 20xx/20xx\\}}
-\end{center}
-
-\end{titlepage}
-
-\restoregeometry
-\newpage
-\begin{center}
-    (DA FARE ALLA FINE)\\
-    5 parole chiave per caratterizzare il contenuto della dissertazione:\\ (se non ti piacciono così sparse puoi anche semplicamente scriverle su una riga sola)
-\end{center}
-
-% https://tex.stackexchange.com/questions/26538/words-scattered-randomly-in-on-coverpage
-\begin{tikzpicture}[overlay,remember picture,shift=(current page.center)]
-\pgfmathsetseed{3}
-
-
-\foreach [count=\count] \word in {Parola 1, parola 2, parola 3, parola 4, parola 5} {
-\node [
-    xshift={(mod(\count,3)-1)*(\paperwidth/4)},
-    yshift={(mod(\count,7)-3)*(\paperwidth/6)},
-    xshift=rand*4cm,
-    yshift=rand*2cm,
-    % rotate=rand*35,
-    % opacity=rnd*0.5+0.125,
-    font=\large] {\word};
-}
-\end{tikzpicture}
-\newpage
-
-\topmargin=6.5cm
-\begin{flushright}
-\emph{
-\LARGE{La dedica}\\\vspace{2mm}
-\LARGE{anche quella se vuoi}\\\vspace{3mm} 
-\LARGE{su più righe} 
-}
-\end{flushright}
-\newpage~\newpage
-\pagenumbering{gobble}
-\chapter*{Abstract}
-Abstract qui (ti consiglio di farlo alla fine)
-
-\topmargin=-1cm
 \tableofcontents
-\thispagestyle{empty}
-\listoftables
-\thispagestyle{empty}
-\listoffigures
-\thispagestyle{empty}
-\newpage~\newpage
-
-
-\pagenumbering{arabic}
-\setcounter{chapter}{-1}
-\raggedbottom
-\chapter{INTRODUZIONE} \label{chap:intro}
-\pagestyle{plain}
-\setcounter{page}{1}
-
-(Io l'introduzione l'ho scritta alla fine)\\
-bla bla bla
-\section{elenchi}
-\subsection{Elenchi puntati}
-\begin{itemize}
-    \item bla
-    \begin{itemize}
-        \item sub-bla
-    \end{itemize}
-    \item bla
-\end{itemize}
-gigi gihfjhghgchgchfdnb
-
-\subsection{Elenchi numerati}
-\begin{enumerate}
-    \item bla1
-    \begin{enumerate}
-        \item sub bla 1
-        \item sub bla 2
-    \end{enumerate}
-    \item bla 2
-\end{enumerate}
-
-\subsection{Mix}
-\begin{itemize}
-    \item bla
-    \begin{enumerate}
-        \item sub bla 1
-    \end{enumerate}
-    \item bla
-\end{itemize}
-
-\begin{enumerate}
-    \item bla 1
-    \begin{itemize}
-        \item sub bla
-    \end{itemize}
-    \item bla 2
-\end{enumerate}
-
-\section{Font}
-\textbf{bla bla bla}\\
-\textit{Ancora bla bla bla}\\
-\texttt{bla bla ma in un'altra riga}
-
-\subsection{Sottosezione 1 - parskip}
-Grazie al package parskip se vai a capo nel .tex lasciando una riga
-
-ti mette un po' di spazio anche nel pdf.\\
-Attenzione però che ogni tanto questa feature fa lasciare troppo spazio tra testo e immagini / tabelle, se capita prova a togliere un po' di righe vuote. \\
-Senza questo pacchetto, una doppia new line (\texttt{$\backslash n\backslash n$}) crea un nuovo paragrafo, la cui prima riga viene leggermente indentata (un comportamento indesiderato se vieni da altri strumenti di stesura). Eventualmente, si può usare per allungare di qualche pagina alla tesi, evitando di abusarne.
-\subsection{Sottosezione 2 - capitoli}
-I capitoli iniziano sempre in una pagina dispari, quindi a volte vedrai delle pagine bianche tra uno e l'altro
-\subsubsection{Sottosottosezione 1} \label{subsub:bla}
-bla bla bla
-
-\chapter{Dopo l'introduzione}
-qua scrivi qualcosa
-\section{Immagini}
-Quando fai begin figure, ricordati di mettere tra quadre un modificatore di posizione: H significa esattamente nel punto dove si trova l'immagine nel file .tex e ti consiglio di usare quello, se no ci sono ad esempio t (top) e b (bottom).
-
-\begin{figure}[H]
-    \centering
-    % Se metti solo una delle due dimensioni, l'altra scala in automatico
-    \includegraphics[height = 6cm, width=8cm]{img/frog.jpg}
-    \caption{Caption (questo viene scritto nell'indice delle figure)}
-    % La label ci vuole sempre e te la inventi tu: serve per riferirsi alle immagini successivamente
-    \label{fig:frog}
-\end{figure}
-
-\section{tabelle}
-\subsection{Tabella semplice}
-Anche qui nota H tra quadre, la caption e la label
-
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|}
-    \hline
-        \textbf{Pratiche agili} & \textbf{Studenti}  \\ \hline
-        Sprint planning & 73  \\ \hline
-        Pair programming & 73  \\ \hline
-        Retrospettiva & 48  \\ \hline
-    \end{tabular}
-    \caption{Tabella semplice (anche questo scritto nell'indice delle tabelle)}
-    \label{tab:simple}
-\end{table}
-
-\subsection{tabelle avanzate}
-Con multirow (e multicolumn che però serve meno) puoi fare righe (colonne) più grandi del normale.\\
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|c|c|c|}
-    \hline
-        \textbf{Team} & \textbf{LoC verificate} & \textbf{LoC sviluppatori} & \textbf{Ore sviluppatori} & \textbf{LoC/h}  \\ \hline
-        \multirow{2}*{1} & 1148& m: 888& m: 40& 22\cr & Diff: -1852& $\sigma$: 371& $\sigma$: 27& \\ \hline
-        \multirow{2}*{2}&1858& m: 1404& m: 65& 22\cr &  Diff: -448& $\sigma$: 1222& $\sigma$: 78& \\ \hline
-        \multirow{2}*{3}&1640& m: 1400& m: 96& 15\cr &  Diff: -2810& $\sigma$: 1417& $\sigma$: 41& \\ \hline
-    \end{tabular}
-    \caption{CAPTION}
-    \label{tab:avanz}
-\end{table}
-
-
-\subsubsection{Tabelle girate}
-Se usi landscape la tabella viene girata (nel caso dovessi inserirne una molto grande)
-\begin{landscape}
-\begin{table}[H]
-    \centering
-    \begin{tabular}{|c|c|}
-    \hline
-        \textbf{Numero} & \textbf{\#}  \\ \hline
-        UNO & 1  \\ \hline
-        DUE & 2  \\ \hline
-        TRE & 3  \\ \hline
-    \end{tabular}
-    \caption{Tabella girata}
-    \label{tab:girata}
-\end{table}
-
-\end{landscape}
-
-\section{Grafici}
-Puoi creare grafici con tikzpicture.
-Qui c'e' un grafico con asse x e y customizzabili per ogni tipo d'utilizzo.
-Tutti i tool e tutorial necessari per creare ogni tipo di grafico puo' essere trovato qui: https://tikz.dev/
-
-\begin{tikzpicture}
-  % Draw x-axis
-  \draw[->] (-1,0) -- (15,0) node[right] {$x$};
-  % Draw y-axis
-  \draw[->] (0,-1) -- (0,5) node[above] {$y$};
-  
-  % Draw grid lines (optional)
-  \foreach \x in {1,2,3,4,5,6,7,8,9,10,11,12,13,14}
-    \draw (\x,-0.1) -- (\x,0.1);
-  \foreach \y in {1,2,3,4}
-    \draw (-0.1,\y) -- (0.1,\y);
-  
-  % Draw origin
-  \fill (0,0) circle[radius=2pt];
-\end{tikzpicture}
-
-\section{Import di file TeX}
-Puoi importare altri file tex per intero includendoli cosi'.
-Questo e' molto utile per mettere insieme diversi capitoli di una tesi o di un grande documento in generale.
-
-\input{imported_document.tex}
-
-\chapter{Altri comandi}
-bla bla
-\section{Math mode}
-Per inserire simboli matematici (e lettere greche) serve la math mode:
-
-Usando il simbolo del dollaro hai la math mode inline: $5 \times \alpha = 3\lambda$
-
-Altrimenti hai quella con le barre e le quadre \[ \frac{\sum_6^i 3i\theta}{12k^2\times 7}\]
-
-Infine hai quelle con begin equation (che vengono numerate):
-\begin{equation}
-    \frac{1}{2}\times A_{bcd}\times E^{fgh}
-\end{equation}
-
-Anche le equazioni possono avere label.
-\section{url e footnote}
-per mettere un link usa url: \url{wikipedia.it}
-
-per fare note a piè di pagina usa footnote\footnote{Tipo questa}
-
-\section{Code snippets}
-per inserire code snippets, puoi usare lstlisting
-
-\begin{lstlisting}[language=c]
-#include<stdio.h>
-
-int main(void) {
-    printf("Hello World\n");
-    return 0;
-}
-\end{lstlisting}
-
-\section{verbatim}
-Se ti serve scrivere codice o qualcosa per cui ti serve una formattazione specifica usa verbatim:
-\begin{verbatim}
-    Qui puoi scrivere
-
-    come      vuoi
-    e viene tutto
-
-scritto
-                    monospaziato
-\end{verbatim}
-\section{riferimenti}
-Come detto prima le label servono per riferirsi ad altre parti del testo citate precendentemente.\\
-Ti consiglio di metterle sempre almeno a figure. immagini e capitoli.
-
-Per riferirti a qualcosa basta fare ref seguito dal nome della label, ad esempio ``vedi capitolo \ref{chap:intro}''.\\In questo modo dal pdf cliccando sulla reference, ti porta direttamente al punto giusto.
-Altri pacchetti come \texttt{fancyref} e \texttt{cleveref} (consigliato) possono aiutare nell'automatizzare la creazione delle refrence. Usando ad esempio \texttt{\cref{chap:intro}} viene generata la dicitura corrispondete all'elemento a cui si fa riferimento, seguita dalla numerazione. Eccone un esempio: \cref{chap:intro}.
-\section{citazioni}
-Per citare si usa cite seguito dal nome dell'articolo nel file.bib, ad esempio ``come visto nell'articolo di tizio\cite{greenwade93}''.
-
-Se non ti piace lo stile di citazione puoi modificarlo sopra dove scrivo usepackage natbib, ma quello impostato attualmente dovrebbe andare bene.
-
-
-
-\renewcommand{\bibsection}{}
-\chapter*{Riferimenti bibliografici}
-\bibliography{refs}
 \newpage
+\section{Catalogo Esercizi: Modellizzazione (Dal Problema Reale al Modello)}
+\addcontentsline{toc}{section}{Catalogo Esercizi: Modellizzazione (Dal Problema Reale al Modello)}
 
-\renewcommand{\appendixtocname}{Appendici}
-\renewcommand{\appendixpagename}{Appendici}
-% \csname @openrightfalse\endcsname
-\pagenumbering{gobble}
-\begin{appendices}
-\chapter{Appendice 1}
-\label{Appendice:A}
-Probabilmente ci sono un sacco di package non utilizzati ma così funziona tutto quindi non ho indagato oltre.
+% 1. Appello 23 Dicembre 2025 - Versione A
+\subsection{1. Appello: 23 Dicembre 2025 (Versione A)}
+Un’azienda alimentare deve produrre $n$ miscele diverse per fare torte. Per produrre le miscele l’azienda usa $m$ materie prime. La produzione di ogni miscela $i$ deve rispettare una ricetta in cui per ogni materia prima $j$ è specificata una quantità $q_{ij}$ da utilizzare per produrre un chilo di miscela. Per ogni miscela $i$, l’azienda ottiene un profitto $p_i$ per ogni chilo prodotto e deve produrre una quantità in chili compresa tra un minimo $a_i$ e un massimo $b_i$. Per ciascuna materia prima $j$, è disponibile la quantità massima $Q_j$. Si vuole definire per ciascuna miscela quanti chili bisogna produrre per massimizzare il profitto complessivo e rispettare i vincoli sopra descritti.
+\textit{Scrivere un modello di programmazione lineare.}
 
-Inoltre su internet c'è un sacco di documentazione se ti servisse.
-\chapter{Appendice B}
-\label{Appendice:B}
-Appendice B se serve
+% 2. Appello 23 Dicembre 2025 - Versione B
+\subsection{2. Appello: 23 Dicembre 2025 (Versione B)}
+Un’azienda elettronica deve produrre $n$ dispositivi diversi utilizzando complessivamente $m$ componenti. Ogni singolo dispositivo $i$ richiede per ogni componente $j$ una specifica quantità $q_{ij}$ e ha un costo di produzione $c_i$. Per ciascun componente $j$, deve essere impiegata una quantità minima $A_j$ e una quantità massima $B_j$. Si vuole definire per ciascun dispositivo quante unità è necessario produrre per minimizzare il costo complessivo e rispettare i vincoli sopra descritti.
+\textit{Scrivere un modello di programmazione lineare intera.}
 
-\chapter{Embed di interi PDF}
-\label{Appendice:C}
-Se ti serve puoi fare embed di PDF interi con pdfpage, scegliendo anche le pagine (o mettendo - se le vuoi tutte):
+% 3. Appello 23 Dicembre 2025 - Versione C
+\subsection{3. Appello: 23 Dicembre 2025 (Versione C)}
+Un’azienda di trasporti deve distribuire un unico prodotto disponibile presso $n$ depositi a $m$ destinazioni diverse. Per ogni deposito $i$ c’è una disponibilità di merce pari a $a_i$ unità, mentre per ogni destinazione c’è una richiesta pari a $b_j$ unità. Ciascun deposito può servire una o più destinazioni, così come ciascuna destinazione può essere servita da uno o più depositi. Il trasporto di una unità di merce dal deposito $i$ alla destinazione $j$ prevede un costo di trasporto pari a $c_{ij}$. Si vuole pianificare come distribuire le merci dai depositi verso le destinazioni minimizzando il costo complessivo rispettando i vincoli sopra descritti.
+\textit{Scrivere un modello di programmazione lineare.}
 
-\includepdf[pages=1]{pdf/sample.pdf}
-\end{appendices}
+% 4. Appello 23 Dicembre 2025 - Versione D
+\subsection{4. Appello: 23 Dicembre 2025 (Versione D)}
+Un’azienda di manutenzione deve assegnare $n$ interventi a $m$ squadre di tecnici. Ogni intervento $i$ richiede $d_i$ giornate e deve essere assegnato a una e una sola squadra; mentre ogni squadra $j$ ha un numero complessivo di giornate a disposizione pari a $Q_j$. Ogni squadra può svolgere un solo intervento alla volta. L’intervento $i$ eseguito dalla squadra $j$ ha un costo complessivo pari a $c_{ij}$. Si vuole pianificare come assegnare gli interventi alle squadre minimizzando il costo complessivo e rispettando i vincoli sopra descritti.
+\textit{Scrivere un modello di programmazione lineare (binaria).}
 
-\newpage~\newpage
-\chapter*{Ringraziamenti}
-Grazie a tutti
+% 5. Appello 13 Gennaio 2026
+\subsection{5. Appello: 13 Gennaio 2026}
+Un’azienda deve stabilire come distribuire delle automobili (di un unico modello e un unico allestimento) disponibili presso $n$ depositi verso $m$ concessionari. Per ogni deposito $i$ è indicata una disponibilità di auto pari a $a_i$ unità, mentre per ogni concessionario $j$ è indicata una richiesta pari a $b_j$ unità. Ciascun deposito può servire uno o più concessionari, così come ciascun concessionario può essere servito da uno o più depositi. Il trasporto di una singola auto dal deposito $i$ al concessionario $j$ prevede un costo di trasporto pari a $c_{ij}$, mentre deve essere pagato un costo fisso $f_{ij}$ se dal deposito $i$ al concessionario $j$ è inviata almeno un’auto. Si vuole pianificare come distribuire le auto minimizzando il costo complessivo.
+\textit{Scrivere un modello di programmazione lineare (mista-intera).}
+
+% 6. Appello 10 Febbraio 2026
+\subsection{6. Appello: 10 Febbraio 2026}
+Un’azienda deve stabilire come distribuire $p$ prodotti disponibili presso $n$ depositi verso $m$ punti di vendita. Per ogni deposito $i$ e per ogni prodotto $k$ è disponibile una quantità $a_{ik}$ unità, mentre ogni punto di vendita $j$ richiede una quantità $b_{jk}$ unità del prodotto $k$. Il trasporto di una unità del prodotto $k$ dal deposito $i$ al punto $j$ prevede un costo di trasporto pari a $c_{ijk}$, mentre deve essere pagato un costo fisso $f_{ij}$ se dal deposito $i$ al punto $j$ è inviata almeno una unità di un qualche prodotto. Si vuole minimizzare il costo complessivo.
+\textit{Scrivere un modello di programmazione lineare.}
+
+% 7. Simulazione 1
+\subsection{7. Simulazione 1}
+Si consideri un insieme di $n$ oggetti di peso $w_i$, $i = 1, \dots, n$, e un insieme di contenitori di capacità $W$. Si vuole minimizzare il numero di contenitori necessari per contenere tutti gli $n$ oggetti. Ciascun oggetto deve essere caricato tutto in un unico contenitore.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 8. Simulazione 2
+\subsection{8. Simulazione 2}
+Si consideri un insieme di $m$ risorse disponibili nelle quantità $q_j$, $j = 1, \dots, m$, e un insieme di $n$ prodotti che forniscono un profitto $p_i$, $i = 1, \dots, n$, per ogni unità prodotta. Per ogni unità prodotta ciascun prodotto $i$ consuma $a_{ij}$ unità di ciascuna risorsa $j$. Si vuole decidere quante unità produrre di ciascun prodotto massimizzando il profitto e rispettando le quantità di risorse disponibili. Per ciascun prodotto non è possibile produrre quantità frazionarie.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 9. Appello 30 Maggio 2023
+\subsection{9. Appello: 30 Maggio 2023}
+Si consideri un insieme di $n$ depositi che hanno una capacità di $Q_i$ unità di merce a settimana e un insieme di $m$ punti vendita che richiedono $q_j$ unità a settimana. Ogni punto vendita deve essere servito da un unico deposito e ogni deposito può servire solo un insieme di punti vendita in cui la somma delle richieste non supera la sua capacità. Per trasportare “tutta” la merce dal deposito $i$ al punto vendita $j$ si paga complessivamente un costo $c_{ij}$. Si vuole minimizzare il costo complessivo.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 10. Appello 6 Giugno 2023
+\subsection{10. Appello: 6 Giugno 2023}
+Si consideri un insieme di $n$ oggetti di peso $w_i$ quintali e di volume $v_i$ metri cubi. Ad ogni oggetto $i$ è associato un indice di urgenza $u_i$. Gli oggetti devono essere caricati in un insieme di $m$ container che hanno una capacità in peso di $W_j$ quintali e in volume di $V_j$ metri cubi. I container potrebbero non essere sufficienti, per cui si vuole decidere quali oggetti caricare in quali container per massimizzare la somma degli indici di urgenza rispettando i vincoli di capacità.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 11. Appello 20 Giugno 2023
+\subsection{11. Appello: 20 Giugno 2023}
+Si consideri una rete logistica rappresentata da un grafo $G(V,A)$ in cui $V$ rappresenta punti di produzione, di vendita e di transito. Per ciascun vertice $i \in V$ abbiamo $b_i > 0$ se è un punto di produzione, $b_i < 0$ se è un punto di vendita (richiesta), $b_i = 0$ se è transito. Trasportare una unità di merce sull'arco $(i,j)$ prevede un costo $c_{ij}$ e la quantità non può superare la capacità $u_{ij}$. Si vuole minimizzare il costo complessivo per soddisfare tutte le richieste.
+\textit{Scrivere un modello di programmazione lineare.}
+
+% 12. Appello 12 Luglio 2023
+\subsection{12. Appello: 12 Luglio 2023}
+Una rete logistica è rappresentata da un grafo $G(V,A)$ bipartito in cui l'insieme dei vertici è partizionato in depositi $V_D$ e punti vendita $V_P$. Per ogni deposito $i \in V_D$ abbiamo una quantità $a_i$ disponibile, per ogni punto vendita $j \in V_P$ una richiesta $b_j$. Ogni arco $(i,j) \in A$ ha un costo $c_{ij}$ per unità trasportata. Si vuole minimizzare il costo complessivo soddisfacendo le richieste con le disponibilità.
+\textit{Scrivere un modello di programmazione lineare.}
+
+% 13. Appello 25 Luglio 2023
+\subsection{13. Appello: 25 Luglio 2023}
+Un'azienda produce prodotti $P$ utilizzando reparti $R$. Ogni unità del prodotto $i \in P$ genera un profitto $p_i$ e richiede per ciascun reparto $j \in R$ un numero di ore $q_{ij}$. Il numero di unità prodotte per ciascun prodotto $i$ non deve superare la soglia $M_i$. Ciascun reparto $j$ ha a disposizione $Q_j$ ore. Si vuole massimizzare il profitto complessivo.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 14. Appello 29 Agosto 2023
+\subsection{14. Appello: 29 Agosto 2023}
+Si consideri il problema di caricare prodotti $P$ in contenitori di capacità $W$. I contenitori possono contenere al massimo $K$ prodotti. Ogni prodotto $i \in P$ ha un peso $w_i$ e deve essere caricato interamente in un solo contenitore. Si vuole determinare come caricare tutti i prodotti nel minor numero di contenitori rispettando i vincoli.
+\textit{Scrivere un modello di programmazione lineare intera.}
+
+% 15. Appello 14 Settembre 2023
+\subsection{15. Appello: 14 Settembre 2023}
+Si consideri il trasporto di una merce in una rete logistica con nodi $N$ (magazzini). In ogni nodo $i$ la merce può essere caricata ($b_i > 0$), scaricata ($b_i < 0$) o transitare ($b_i = 0$). Ogni arco $(i,j)$ ha una capacità $u_{ij}$ e un costo unitario $c_{ij}$. Si vuole minimizzare il costo complessivo rispettando i vincoli di bilancio e capacità.
+\textit{Scrivere un modello di programmazione lineare.}
+
+\newpage
+\section{Catalogo Esercizi: Simplesso Primale}
+
+% 1. Appello 23 Dicembre 2025 - Versione A
+\subsection{1. Appello: 23 Dicembre 2025 (Versione A - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +3x_1 + 2x_2 + x_3 \\ \text{s.t. } +x_1 + x_2 + x_3 \le 6 \\ +2x_1 + x_2 + x_3 \ge 8 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 2. Appello 13 Gennaio 2026 - Versione A
+\subsection{2. Appello: 13 Gennaio 2026 (Versione A - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 + 5x_2 - 2x_3 \\ \text{s.t. } x_1 + x_2 + x_3 = 4 \\ 2x_1 + x_2 + x_3 \le 5 \\ x_1 + x_3 \le 4 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 3. Appello 10 Febbraio 2026 - Versione A
+\subsection{3. Appello: 10 Febbraio 2026 (Versione A - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +x_1 - 2x_2 + x_3 \\ \text{s.t. } x_1 + x_2 + 3x_3 \le 4 \\ 2x_1 + x_2 + x_3 \le 10 \\ x_1 - x_2 + x_3 = 2 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 4. Appello 23 Dicembre 2025 - Versione C
+\subsection{4. Appello: 23 Dicembre 2025 (Versione C - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +x_1 + 3x_2 - x_3 \\ \text{s.t. } +x_1 - x_2 + x_3 \le 2 \\ -2x_1 + x_2 + x_3 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 5. Simulazione 1
+\subsection{5. Simulazione 1 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 + 2x_3 \\ \text{s.t. } +3x_1 + 3x_2 + x_3 \le 2 \\ -x_1 + x_2 + x_3 \ge 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 6. Appello 30 Maggio 2023
+\subsection{6. Appello: 30 Maggio 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 \\ \text{s.t. } 2x_1 - 2x_2 \le 3 \\ x_1 + 2x_2 \ge 6 \\ x_1, x_2 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 7. Appello 6 Giugno 2023
+\subsection{7. Appello: 6 Giugno 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 + 4x_3 \\ \text{s.t. } x_1 + x_2 + 3x_3 \le 4 \\ x_1 + 2x_2 - x_3 \ge 6 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 8. Appello 20 Giugno 2023
+\subsection{8. Appello: 20 Giugno 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +2x_1 - 3x_2 + 3x_3 \\ \text{s.t. } -x_1 + 2x_2 + x_3 \le 2 \\ +4x_1 - 2x_2 - x_3 = 4 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 9. Appello 12 Luglio 2023
+\subsection{9. Appello: 12 Luglio 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +x_1 - x_2 - x_3 \\ \text{s.t. } -x_1 + 2x_2 - x_3 \le 2 \\ +2x_1 - 3x_2 + x_3 = 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 10. Appello 25 Luglio 2023
+\subsection{10. Appello: 25 Luglio 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 - x_2 + 3x_3 \\ \text{s.t. } +x_1 + x_2 + 3x_3 \le 6 \\ -2x_1 + x_2 - 4x_3 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 11. Appello 29 Agosto 2023
+\subsection{11. Appello: 29 Agosto 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 + x_2 + 3x_3 \\ \text{s.t. } -x_1 + x_2 + 3x_3 \le 4 \\ -3x_1 + x_2 - 2x_3 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+% 12. Appello 14 Settembre 2023
+\subsection{12. Appello: 14 Settembre 2023 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +x_1 + 5x_2 + x_3 \\ \text{s.t. } +x_1 + x_2 - 2x_3 \le 4 \\ -x_1 + x_2 + x_3 \ge 2 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Primale.
+
+\section{Catalogo Esercizi: Simplesso Duale}
+
+% 1. Appello 23 Dicembre 2025 - Versione B
+\subsection{1. Appello: 23 Dicembre 2025 (Versione B - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -5x_1 + x_2 + 4x_3 \\ \text{s.t. } +x_1 + 2x_2 + x_3 \ge 9 \\ +2x_1 + x_2 + 2x_3 \le 12 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 2. Appello 23 Dicembre 2025 - Versione D
+\subsection{2. Appello: 23 Dicembre 2025 (Versione D - Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 3x_2 - 2x_3 \\ \text{s.t. } 4x_1 - 2x_2 - x_3 \ge 4 \\ x_1 + 3x_2 + 2x_3 \le 5 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 3. Simulazione 2
+\subsection{3. Simulazione 2 (Es. 2)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 + 2x_3 \\ \text{s.t. } +3x_1 + 3x_2 + x_3 \le 2 \\ -x_1 + x_2 + x_3 \ge 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 4. Appello 13 Gennaio 2026 - Es. 3
+\subsection{4. Appello: 13 Gennaio 2026 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +x_1 + 2x_2 - 3x_3 \\ \text{s.t. } x_1 + x_2 + x_3 \le 4 \\ 2x_1 + x_2 + x_3 \le 5 \\ x_1 - x_2 + x_3 = 2 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 5. Appello 10 Febbraio 2026 - Es. 3
+\subsection{5. Appello: 10 Febbraio 2026 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = x_1 + 2x_2 + 3x_3 \\ \text{s.t. } x_1 + 2x_2 + x_3 = 4 \\ 2x_1 + x_2 + 2x_3 \le 5 \\ x_1 - x_2 + x_3 \le 4 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 6. Appello 12 Luglio 2023 - Es. 3
+\subsection{6. Appello: 12 Luglio 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 - 2x_3 \\ \text{s.t. } -x_1 + 2x_2 - 2x_3 \ge 4 \\ 2x_1 - x_2 + 2x_3 \le 4 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 7. Appello 25 Luglio 2023 - Es. 3
+\subsection{7. Appello: 25 Luglio 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 - x_2 + 3x_3 \\ \text{s.t. } x_1 + x_2 + 3x_3 \le 6 \\ -2x_1 + x_2 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+% 8. Appello 14 Settembre 2023 - Es. 3
+\subsection{8. Appello: 14 Settembre 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = +3x_1 - x_2 - 2x_3 \\ \text{s.t. } +2x_1 + 2x_2 + x_3 \le 6 \\ +2x_1 + 2x_2 - 2x_3 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Risolvere il problema P utilizzando il metodo del Simplesso Duale.
+
+\section{Verifica di Ottimalità (Complementarietà)}
+
+% 1. Appello 23 Dicembre 2025 - Versione A
+\subsection{1. Appello: 23 Dicembre 2025 (Versione A - Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 5x_1 + x_2 + 4x_3 \\ \text{s.t. } x_1 + 2x_2 + x_3 \le 9 \\ 3x_1 + x_2 + 2x_3 \ge 12 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (3,3,0)$ è ottima per il problema P.
+
+% 2. Appello 23 Dicembre 2025 - Versione B
+\subsection{2. Appello: 23 Dicembre 2025 (Versione B - Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 4x_1 - 2x_2 + x_3 \\ \text{s.t. } x_1 + x_2 + x_3 \ge 6 \\ 2x_1 + x_2 + x_3 \le 8 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (2,4,0)$ è ottima per il problema P.
+
+% 3. Appello 23 Dicembre 2025 - Versione C
+\subsection{3. Appello: 23 Dicembre 2025 (Versione C - Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = x_1 - 2x_2 + 3x_3 \\ \text{s.t. } x_1 - x_2 + x_3 \le 5 \\ -2x_1 + 3x_2 + x_3 \le 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (16,11,0)$ è ottima per il problema P.
+
+% 4. Appello 23 Dicembre 2025 - Versione D
+\subsection{4. Appello: 23 Dicembre 2025 (Versione D - Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 - x_2 - x_3 \\ \text{s.t. } x_1 + x_2 + 2x_3 \le 5 \\ -2x_1 + x_2 + 4x_3 \ge 2 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (2,0, \frac{3}{2})$ è ottima per il problema P.
+
+% 5. Appello 13 Gennaio 2026
+\subsection{5. Appello: 13 Gennaio 2026 (Es. 4)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + 5x_2 - 2x_3 \\ \text{s.t. } 4x_1 - 2x_2 + x_3 \le 5 \\ 2x_1 + 3x_2 - x_3 \ge 4 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (0,9,23)$ è ottima per il problema P.
+
+% 6. Appello 10 Febbraio 2026
+\subsection{6. Appello: 10 Febbraio 2026 (Es. 4)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = x_1 - 4x_2 + x_3 \\ \text{s.t. } x_1 - 2x_2 + x_3 \ge 4 \\ -x_1 + 2x_2 + x_3 \le 4 \\ x_1 - x_2 + x_3 \le 6 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (8,2,0)$ è ottima per il problema P.
+
+% 7. Simulazione 1
+\subsection{7. Simulazione 1 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -2x_1 - x_2 \\ \text{s.t. } 2x_1 - 3x_2 \ge -4 \\ 3x_1 + 2x_2 \le 7 \\ x_1, x_2 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (1,2)$ è ottima per il problema P.
+
+% 8. Simulazione 2
+\subsection{8. Simulazione 2 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -2x_1 + 2x_2 \\ \text{s.t. } -x_1 + 3x_2 \ge 2 \\ 3x_1 + 2x_2 \le 5 \\ x_1, x_2 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (1,1)$ è ottima per il problema P.
+
+% 9. Appello 30 Maggio 2023
+\subsection{9. Appello: 30 Maggio 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 + x_2 + 2x_3 \\ \text{s.t. } 2x_1 - 2x_2 + 3x_3 \le 3 \\ x_1 + 2x_2 + 3x_3 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (2, \frac{1}{2}, 0)$ è ottima per il problema P.
+
+% 10. Appello 6 Giugno 2023
+\subsection{10. Appello: 6 Giugno 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -x_1 - x_2 + x_3 \\ \text{s.t. } x_1 - x_2 - x_3 \ge 2 \\ x_1 + 2x_2 - 2x_3 \le 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (3,0,1)$ è ottima per il problema P.
+
+% 11. Appello 20 Giugno 2023
+\subsection{11. Appello: 20 Giugno 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 2x_1 - 2x_2 - 3x_3 \\ \text{s.t. } x_1 + 2x_2 - 2x_3 \ge -2 \\ x_1 + 3x_2 - x_3 \le 1 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (0,1,2)$ è ottima per il problema P.
+
+% 12. Appello 25 Luglio 2023
+\subsection{12. Appello: 25 Luglio 2023 (Es. 3)}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 - x_2 + 3x_3 \\ \text{s.t. } x_1 + x_2 + 3x_3 \le 6 \\ -2x_1 + x_2 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (1,5,0)$ è ottima per il problema P.
+
+% 13. Appello 29 Agosto 2023
+\subsection{13. Appello: 29 Agosto 2023 (Es. 3)}
+(Testo identico all'Appello del 25 Luglio 2023)
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 - x_2 + 3x_3 \\ \text{s.t. } x_1 + x_2 + 3x_3 \le 6 \\ -2x_1 + x_2 \ge 3 \\ x_1, x_2, x_3 \ge 0 \end{cases} \]
+Utilizzando le relazioni di complementarietà verificare se la soluzione $\mathbf{x} = (1,5,0)$ è ottima per il problema P.
+
+
+\section{Parte I: Branch and Bound}
+In questa sezione sono presenti gli esercizi in cui viene chiesto esplicitamente di eseguire un'iterazione di Branch and Bound partendo da un tableau ottimo continuo.
+
+\subsection{Appello: 20 Giugno 2023 (Esercizio 4)}
+\textbf{Problema P:}
+\[ (P) \begin{cases} \min z = -x_1 + 2x_2 - 2x_3 \\ \text{s.t. } -x_1 + 2x_2 - 2x_3 \ge 3 \\ 2x_1 - x_2 + 2x_3 \le 4 \\ x_1, x_2, x_3 \ge 0, \text{ intere} \end{cases} \]
+
+\textbf{Tableau ottimo continuo:}
+\[ \begin{array}{c|ccccc|c}
+& x_1 & x_2 & x_3 & x_4 & x_5 & RHS \\ \hline
+z & 0.000 & 0.000 & 0.000 & -1.000 & 0.000 & 3.000 \\ \hline
+x_2 & 1.000 & 1.000 & 0.000 & -1.000 & 1.000 & 7.000 \\
+x_3 & 1.500 & 0.000 & 1.000 & -0.500 & 1.000 & 5.500 \\
+\end{array} \]
+
+\subsection{Appello: 29 Agosto 2023 (Esercizio 4)}
+\textbf{Problema P:}
+\[ (P) \begin{cases} \min z = +3x_1 - x_2 - 2x_3 \\ \text{s.t. } 4x_1 + 2x_2 + x_3 \le 6 \\ 3x_1 + x_2 - 2x_3 \ge 2 \\ x_1, x_2, x_3 \ge 0, \text{ intere} \end{cases} \]
+
+\textbf{Tableau ottimo continuo:}
+\[ \begin{array}{c|ccccc|c}
+& x_1 & x_2 & x_3 & x_4 & x_5 & RHS \\ \hline
+z & -4.400 & 0.000 & 0.000 & -0.800 & -0.600 & -3.600 \\ \hline
+x_2 & 2.200 & 1.000 & 0.000 & 0.400 & -0.200 & 2.800 \\
+x_3 & -0.400 & 0.000 & 1.000 & 0.200 & 0.400 & 0.400 \\
+\end{array} \]
+
+\subsection{Schema Meccanico di Risoluzione (Branch and Bound)}
+\begin{enumerate}
+    \item \textbf{Identificazione Variabile Frazionaria:} Guarda la colonna RHS. Identifica le variabili $x_j$ con valore non intero.
+    \item \textbf{Creazione Nodi Figli:} Aggiungi i vincoli $x_j \le \lfloor val \rfloor$ e $x_j \ge \lceil val \rceil$.
+    \item \textbf{Ripristino Tableau:} Inserisci il vincolo scelto nel tableau con una nuova slack ($x_6$).
+    \item \textbf{Simplesso DUALE:} Usa il simplesso duale per riottimizzare.
+\end{enumerate}
+
+\section{Catalogo esercizi sui Tagli di Gomory}
+
+Ecco il catalogo completo degli esercizi sui \textbf{Tagli di Gomory} estratti dalle risoluzioni degli esami passati.
+
+\textbf{Correzione dello Stratega:} Ti sbagli nell'aspettarti 15 esercizi. Come già osservato per il Branch and Bound e il Rilassamento Lagrangiano, l'Esercizio 4 (o talvolta il 3) ruota ciclicamente tra diverse tecniche di Programmazione Lineare Intera. Nelle fonti sono presenti \textbf{4 esercizi d'esame/simulazione} e \textbf{1 esempio guidato} completo nella teoria.
+
+\bigskip
+
+\subsection{1. Appello: 23 Dicembre 2025 (Versione C - Esercizio 3)}
+
+\textbf{Testo integrale:}
+
+Si consideri il seguente problema $P$:
+\[
+(P)
+\begin{cases}
+\min z = x_1 - 2x_2 + 3x_3 \\
+x_1 - x_2 + x_3 \le 5 \\
+-2x_1 + 3x_2 + x_3 \le 1 \\
+x_1, x_2, x_3 \ge 0 \text{ intere}
+\end{cases}
+\]
+Risolvendo il rilassamento continuo del problema $P$ utilizzando il metodo del Simplesso abbiamo ottenuto il seguente tableau ottimo:
+\[
+\begin{array}{c|ccccc|c}
+   & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} \\
+\hline
+z  & 0.000 & 0.000 & 3.667 & 0.333 & 0.667 & 8.000 \\
+\hline
+x_1 & 1.000 & 0.000 & 4.000 & 3.000 & 1.000 & 16.000 \\
+x_2 & 0.000 & 1.000 & 0.333 & 0.667 & 0.333 & 1.333
+\end{array}
+\]
+a) Definire il Taglio di Gomory relativo alla variabile $x_2$ e dopo averlo aggiunto al tableau riottimizzare.
+
+\bigskip
+
+\subsection{2. Appello: 23 Dicembre 2025 (Versione D - Esercizio 4)}
+
+\textbf{Testo integrale:}
+
+Si consideri il seguente problema $P$:
+\[
+(P)
+\begin{cases}
+\min z = -x_1 - x_2 - x_3 \\
+x_1 + x_2 + 2x_3 \le 5 \\
+-2x_1 + x_2 + 4x_3 \ge 2 \\
+x_1, x_2, x_3 \ge 0 \text{ intere}
+\end{cases}
+\]
+Risolvendo il rilassamento continuo abbiamo ottenuto il seguente tableau ottimo:
+\[
+\begin{array}{c|ccccc|c}
+   & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} \\
+\hline
+z  & 0.000 & 0.000 & 0.600 & 0.400 & 1.000 & 0.600 \\
+\hline
+x_2 & -0.600 & 1.000 & 0.200 & -0.200 & -0.000 & 0.200 \\
+x_1 & 1.000 & 0.000 & 1.800 & 1.200 & -0.000 & 4.800
+\end{array}
+\]
+a) Definire il Taglio di Gomory relativo alla variabile $x_2$ e dopo averlo aggiunto al tableau riottimizzare.
+
+\bigskip
+
+\subsection{3. Simulazione 1 (Esercizio 4)}
+
+\textbf{Testo integrale:}
+
+Si consideri il seguente problema $P$:
+\[
+(P)
+\begin{cases}
+\min z = -2x_1 - x_2 + 2x_3 \\
+x_1 + 2x_2 + 4x_3 \le 4 \\
+-2x_1 + x_2 + x_3 \ge 1 \\
+x_1, x_2, x_3 \ge 0 \text{ intere}
+\end{cases}
+\]
+Risolvendo il rilassamento continuo abbiamo ottenuto il seguente tableau ottimo:
+\[
+\begin{array}{c|ccccc|c}
+   & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} \\
+\hline
+z  & -4.000 & 0.000 & 0.000 & -2.000 & -1.000 & -7.000 \\
+\hline
+x_3 & 1.000 & 0.000 & 1.000 & 0.500 & 0.500 & 2.500 \\
+x_2 & -1.000 & 1.000 & 0.000 & -0.250 & 0.250 & 0.250
+\end{array}
+\]
+a) Aggiungere un taglio di Gomory relativo alla variabile $x_3$ (i.e., riga 1 del tableau) e riottimizzare.
+
+\bigskip
+
+\subsection{4. Appello: 25 Luglio 2023 (Esercizio 4)}
+
+\textbf{Testo integrale:}
+
+Si consideri il seguente problema $P$:
+\[
+(P)
+\begin{cases}
+\min z = -2x_1 - x_2 + 2x_3 \\
+x_1 + 2x_2 + 4x_3 \le 4 \\
+-2x_1 + x_2 + x_3 \ge 1 \\
+x_1, x_2, x_3 \ge 0 \text{ intere}
+\end{cases}
+\]
+Il tableau ottimo del rilassamento continuo è:
+\[
+\begin{array}{c|ccccc|c}
+   & x_1 & x_2 & x_3 & x_4 & x_5 & \text{RHS} \\
+\hline
+z  & 0.000 & 0.000 & -4.600 & -0.800 & -0.600 & -2.600 \\
+\hline
+x_2 & 0.000 & 1.000 & 1.800 & 0.400 & -0.200 & 1.800 \\
+x_1 & 1.000 & 0.000 & 0.400 & 0.200 & 0.400 & 0.400
+\end{array}
+\]
+a) Definire il taglio di Gomory relativo alla variabile $x_2$ e dopo averlo aggiunto al tableau riottimizzare.
+
+\bigskip
+
+\subsection{Schema Meccanico di Risoluzione (Chain of Thought)}
+
+Per non sbagliare la generazione del taglio e la riottimizzazione, imita fedelmente questi passaggi del professore:
+
+\begin{enumerate}
+  \item \textbf{Scelta della riga:} Identifica la riga della variabile frazionaria indicata (es. $x_2 = 1.333$ nell'appello di Dicembre).
+  \item \textbf{Scomposizione parti frazionarie ($F$):} Per ogni coefficiente $y_{ij}$ e per il termine noto $b_i$ della riga, calcola la parte frazionaria positiva
+    \[
+      F = \text{val} - \lfloor \text{val} \rfloor.
+    \]
+    \emph{Attenzione ai negativi:} $\lfloor -0.2 \rfloor = -1 \implies F = -0.2 - (-1) = 0.8$.
+  \item \textbf{Costruzione del Taglio:} Il vincolo da aggiungere è sempre
+    \[
+      -\sum F_{ij} x_j + x_{\text{scarto\_nuova}} = -F_i
+    \]
+    \emph{Fai attenzione:} Nella sommatoria consideri solo le variabili non in base (quelle che nel tableau originale della riga avevano coefficienti non nulli e non erano 1).
+  \item \textbf{Integrazione nel tableau:} Aggiungi il taglio come nuova riga in fondo al tableau e una nuova colonna per la variabile di scarto (es. $x_6$) con coefficiente 1.
+  \item \textbf{Riottimizzazione obbligatoria col Simplesso DUALE:}
+    \begin{itemize}
+      \item Perché? Il nuovo RHS è negativo ($-F_i$), quindi la soluzione è primale non ammissibile.
+      \item Poiché partivi da un tableau ottimo, i costi ridotti nella riga 0 sono tutti $\le 0$, soddisfacendo il requisito per il Simplesso Duale.
+      \item \textbf{Esecuzione:} Scegli la riga del taglio come riga uscente e applica il rapporto minimo duale per trovare la variabile entrante.
+    \end{itemize}
+\end{enumerate}
+
+\noindent
+\textbf{Nota Operativa:} Il professore richiede spesso di fare un solo pivotaggio col duale per trovare la nuova soluzione ottima o dimostrare che il taglio ha ``separato'' la soluzione frazionaria precedente.
+
+\section{Parte III: Rilassamento Lagrangiano}
+
+\subsection{Appello: 23 Dicembre 2025 (Versione A)}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = -4x_1 - 2x_2 + x_3 \\ \text{s.t. } -2x_1 + x_2 + 2x_3 \ge 2 & (1) \\ -x_1 - x_2 + 2x_3 \ge 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda = 0$
+    \item $ii. \lambda = 2$.
+\end{itemize}
+
+\subsection{Appello: 23 Dicembre 2025 (Versione B)}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = x_1 - 4x_2 - x_3 \\ \text{s.t. } x_1 - x_2 + 2x_3 \ge 1 & (1) \\ 2x_1 - x_2 - x_3 \ge 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda = 0$
+    \item $ii. \lambda = 2$.
+\end{itemize}
+
+\subsection{Simulazione 2}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = x_1 + x_2 + 3x_3 \\ \text{s.t. } x_1 - x_2 - x_3 \le 1 & (1) \\ x_1 - x_2 + x_3 \ge 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda_1 = 0$
+    \item $ii. \lambda_1 = -2$.
+\end{itemize}
+
+\subsection{Appello: 30 Maggio 2023}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 2x_1 - x_2 + 3x_3 \\ \text{s.t. } x_1 + x_2 + x_3 \ge 2 & (1) \\ x_1 - x_2 + x_3 \ge 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda_1 = 0$
+    \item $ii. \lambda_1 = 2$.
+\end{itemize}
+
+\subsection{Appello: 12 Luglio 2023}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 2x_1 + 4x_2 + x_3 \\ \text{s.t. } x_1 + x_2 + x_3 \ge 2 & (1) \\ 2x_1 - x_2 + x_3 \le 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda_1 = 0$
+    \item $ii. \lambda_1 = 4$.
+\end{itemize}
+
+\subsection{Appello: 14 Settembre 2023}
+\textbf{Testo integrale:}
+Si consideri il seguente problema P:
+\[ (P) \begin{cases} \min z = 2x_1 - 2x_2 + x_3 \\ \text{s.t. } -x_1 + x_2 + 2x_3 \ge 2 & (1) \\ 2x_1 - x_2 + x_3 \ge 1 & (2) \\ x_1, x_2, x_3 \in \{0,1\} & (3) \end{cases} \]
+a) Rilassare in modo Lagrangiano il vincolo (1) e svolgere la prima iterazione completa del metodo del subgradiente partendo dalle seguenti penalità iniziali:
+\begin{itemize}
+    \item $i. \lambda_1 = 0$
+    \item $ii. \lambda_1 = 3$.
+\end{itemize}
+
+\subsection{Schema Meccanico di Risoluzione (Chain of Thought)}
+\begin{enumerate}
+    \item \textbf{Segno di $\lambda$:} Se rilassi un vincolo $\ge$, allora $\lambda \ge 0$. Se rilassi un vincolo $\le$, allora $\lambda \le 0$.
+    \item \textbf{Scrittura $z_{LR}(\lambda)$:} Combina la funzione obiettivo originale con il vincolo rilassato nella forma: $\min z + \lambda(b - Ax)$.
+    \item \textbf{Risoluzione del Sottoproblema:} Con $\lambda$ fissato, minimizza la nuova funzione rispetto ai vincoli rimanenti (solitamente la binarietà $\{0,1\}$ e un altro vincolo facile).
+    \item \textbf{Calcolo del Subgradiente ($s$):} Usa la formula $s = b - Ax$.
+    \item \textbf{Aggiornamento:} La nuova penalità sarà $\lambda_{new} = \max\{0, \lambda + \theta s\}$ (se $\lambda \ge 0$) o $\lambda_{new} = \min\{0, \lambda + \theta s\}$ (se $\lambda \le 0$).
+    \item \textbf{Verifica Ottimalità:} Se la soluzione $x$ trovata è ammissibile per il problema originale e $\lambda \cdot s = 0$, allora hai trovato l'ottimo.
+\end{enumerate}
+
 \end{document}
