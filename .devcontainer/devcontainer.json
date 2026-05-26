@@ -1,0 +1,24 @@
+{
+    "name": "TeX Live Container",
+    "image": "texlive/texlive:latest",
+    "postCreateCommand": "tlmgr update --self && tlmgr install scheme-full && git config --global user.name 'edoardo' && git config --global user.email 'edoardo.desiderio3@studio.unibo.it'",
+    "remoteUser": "root",
+    "customizations": {
+        "vscode": {
+            "settings": {
+                "editor.fontFamily": "Times New Roman"
+            },
+            "extensions": [
+                
+                "James-Yu.latex-workshop",
+                "tecosaur.latex-utilities",
+                "mathematic.vscode-latex",
+                "github.copilot",
+                "github.copilot-chat",
+                "dnut.rewrap-revived"
+
+            ]
+        }
+        
+    }
+}
